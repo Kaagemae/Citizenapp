@@ -113,15 +113,15 @@ class NotificationsPage extends StatelessWidget {
               children: [
                 Text(
                   date,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.black54,
                   ),
                 ),
-                SizedBox(height: 8.0),
+                const SizedBox(height: 8.0),
                 Text(
                   message,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black87,
                     fontSize: 16.0,
                   ),

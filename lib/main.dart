@@ -182,7 +182,8 @@ class DashboardPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 14),
-            _buildCaseCardsSection(), // Previous cases list
+            // Previouscases list
+            SizedBox(height: 150,child: _buildCaseCardsSection()),
           ],
         ),
       ),
@@ -215,14 +216,14 @@ class DashboardPage extends StatelessWidget {
         color: Colors.blue.shade50,
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Column(
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
+        children: [
           Text(
             'Personal Info',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 8),
+          SizedBox(height: 10),
           Text('Jane Doe', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           Text('ID NO: 3467578686'),
           Text('D.O.B: 21/7/2024'),
@@ -237,7 +238,7 @@ class DashboardPage extends StatelessWidget {
     double progressPercentage = 0.0;
 
     return Container(
-      width: 180,
+      width: 160,
       height: 180,
       decoration: BoxDecoration(
         color: Colors.red.shade50,
@@ -246,9 +247,12 @@ class DashboardPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-            'My Case Progress',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          const Padding(
+            padding: EdgeInsets.only(left: 16.0), // Adding padding to move text to the right
+            child: Text(
+              'My Case Progress',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
           ),
           const SizedBox(height: 10),
           Stack(
@@ -319,25 +323,124 @@ class DashboardPage extends StatelessWidget {
                 ),
               ],
             ),
-            child: Center(
-              child: Icon(
-                icon,
-                size: 50,
-                color: color,
-              ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(icon, size: 40, color: color),
+                const SizedBox(height: 8),
+                Text(label, style: TextStyle(fontSize: 16, color: color)),
+              ],
             ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            label,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
         ],
       ),
     );
   }
 
-  // Previous Case Cards Section
+  // Previous Cases Section
+  Widget _buildCaseCardsSection() {
+    return Flexible(
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          double maxHeight = constraints.maxHeight * 0.6;
+
+          return ListView(
+            scrollDirection: Axis.horizontal,
+            children: [
+              Container(
+                constraints: BoxConstraints(maxHeight: maxHeight),
+                child: const CaseCard(
+                  caseTitle: 'Assault Case',
+                  dateAdded: '26/9/2024',
+                  status: 'Closed',
+                ),
+              ),
+              Container(
+                constraints: BoxConstraints(maxHeight: maxHeight),
+                child: const CaseCard(
+                  caseTitle: 'Cybercrime Case',
+                  dateAdded: '26/9/2024',
+                  status: 'Closed',
+                ),
+              ),
+              Container(
+                constraints: BoxConstraints(maxHeight: maxHeight),
+                child: const CaseCard(
+                  caseTitle: 'Cybercrime Case',
+                  dateAdded: '26/9/2024',
+                  status: 'Closed',
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+// Case Card Widget for Previous Cases
+class CaseCard extends StatelessWidget {
+  final String caseTitle;
+  final String dateAdded;
+  final String status;
+
+  const CaseCard({
+    Key? key,
+    required this.caseTitle,
+    required this.dateAdded,
+    required this.status,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 160,
+      padding: const EdgeInsets.all(12),
+      margin: const EdgeInsets.only(right: 10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.2),
+            spreadRadius: 2,
+            blurRadius: 5,
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            caseTitle,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+          ),
+          const SizedBox(height: 5),
+          Text(
+            dateAdded,
+            style: const TextStyle(color: Colors.grey, fontSize: 12),
+          ),
+          const SizedBox(height: 5),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            decoration: BoxDecoration(
+              color: status == 'Closed' ? Colors.red : Colors.green,
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: Text(
+              status,
+              style: const TextStyle(color: Colors.white, fontSize: 12),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+// Previous Case Cards Section
   Widget _buildCaseCardsSection() {
     List<Map<String, dynamic>> previousCases = [
       {'title': 'Case 1: Theft Incident', 'date': 'Jan 15, 2024', 'status': 'Open'},
@@ -363,7 +466,7 @@ class DashboardPage extends StatelessWidget {
       ),
     );
   }
-}
+
 
 // Placeholder for the RecordCasePage
 class RecordCaseApp extends StatelessWidget {
@@ -379,6 +482,169 @@ class RecordCaseApp extends StatelessWidget {
 }
 
 // Placeholder for the PreviousCasesPage
+
+
+class PreviousCasesPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Previous Cases'),
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            Navigator.pop(context); // Go back to the previous page
+          },
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              // Search functionality
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.filter_list),
+            onPressed: () {
+              // Filter functionality
+            },
+          ),
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ListView(
+          children: [
+            _buildCaseCard(
+              caseTitle: 'Missing Person case',
+              dateReported: '26/9/2024',
+              reporter: 'Jane Doe',
+              progress: 0.0,
+              status: 'New Case',
+            ),
+            _buildCaseCard(
+              caseTitle: 'Traffic case',
+              dateReported: '26/9/2024',
+              reporter: 'Jane Doe',
+              progress: 0.52,
+              status: 'Case in progress',
+            ),
+            _buildCaseCard(
+              caseTitle: 'Assault case',
+              dateReported: '26/9/2024',
+              reporter: 'Jane Doe',
+              progress: 0.52,
+              status: 'Case in progress',
+            ),
+            _buildCaseCard(
+              caseTitle: 'Traffic case',
+              dateReported: '26/9/2024',
+              reporter: 'Jane Doe',
+              progress: 1.0,
+              status: 'Case closed',
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'HOME',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.file_copy),
+            label: 'CASES',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.task),
+            label: 'TASKS',
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCaseCard({
+    required String caseTitle,
+    required String dateReported,
+    required String reporter,
+    required double progress,
+    required String status,
+  }) {
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Circular progress indicator for case progress
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                SizedBox(
+                  width: 50,
+                  height: 50,
+                  child: CircularProgressIndicator(
+                    value: progress, // Set the progress value (0.0 to 1.0)
+                    backgroundColor: Colors.grey.shade300,
+                    valueColor: AlwaysStoppedAnimation<Color>(progress == 1.0 ? Colors.green : Colors.blue),
+                    strokeWidth: 5,
+                  ),
+                ),
+                Text(
+                  '${(progress * 100).toInt()}%', // Show percentage in the center
+                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            const SizedBox(width: 16),
+
+            // Case details (title, reporter, date)
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    caseTitle,
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Reported on $dateReported',
+                    style: const TextStyle(color: Colors.grey),
+                  ),
+                  Text(
+                    'Reported by $reporter',
+                    style: const TextStyle(color: Colors.grey),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    status,
+                    style: TextStyle(
+                      color: status == 'Case closed' ? Colors.green : Colors.blue,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            // Three-dot action menu
+            IconButton(
+              icon: const Icon(Icons.more_vert),
+              onPressed: () {
+                // Handle more actions
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 
 // Placeholder for the UploadDocumentPage
@@ -399,20 +665,7 @@ class UploadDocumentPage extends StatelessWidget {
 }
 
 // Placeholder for the NotificationsPage
-class NotificationsPage extends StatefulWidget {
-  @override
-  _NotificationsPageState createState() => _NotificationsPageState();
-}
-
-class _NotificationsPageState extends State<NotificationsPage> {
-  bool _markAllAsRead = false;
-
-  void _toggleMarkAllAsRead(bool? value) {
-    setState(() {
-      _markAllAsRead = value ?? false;
-    });
-  }
-
+class NotificationsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -432,8 +685,10 @@ class _NotificationsPageState extends State<NotificationsPage> {
             child: Row(
               children: [
                 Checkbox(
-                  value: _markAllAsRead,
-                  onChanged: _toggleMarkAllAsRead,
+                  value: false, // manage state if needed
+                  onChanged: (value) {
+                    // Handle checkbox change
+                  },
                 ),
                 Text('Mark all as Read'),
               ],
@@ -505,57 +760,41 @@ class _NotificationsPageState extends State<NotificationsPage> {
 
   Widget _buildNotificationTile(BuildContext context, IconData icon, String date,
       String message, Color backgroundColor, Color iconColor) {
-    // Check if the message is from Inspector Swaleh
-    final isInspectorMessage = message.contains('Inspector Swaleh');
-
-    return GestureDetector(
-      onTap: () {
-        if (isInspectorMessage) {
-          // Navigate to chat page
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ChatPage(),
-            ),
-          );
-        }
-      },
-      child: Container(
-        margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-        padding: EdgeInsets.all(16.0),
-        decoration: BoxDecoration(
-          color: backgroundColor,
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(icon, color: iconColor, size: 40),
-            SizedBox(width: 16.0),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    date,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black54,
-                    ),
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      padding: EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, color: iconColor, size: 40),
+          SizedBox(width: 16.0),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  date,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black54,
                   ),
-                  SizedBox(height: 8.0),
-                  Text(
-                    message,
-                    style: TextStyle(
-                      color: Colors.black87,
-                      fontSize: 16.0,
-                    ),
+                ),
+                SizedBox(height: 8.0),
+                Text(
+                  message,
+                  style: TextStyle(
+                    color: Colors.black87,
+                    fontSize: 16.0,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
