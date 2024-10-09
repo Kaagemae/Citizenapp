@@ -18,8 +18,9 @@ class Casereportingapp extends StatelessWidget {
       ),
       // Define named routes
       routes: {
-        '/': (context) => SignInPage(), // Default route
+        '/': (context) => LoginPage(), // Default route
         '/dashboard': (context) => DashboardPage(),
+        '/signup': (context) => SignUpPage(),
         '/RecordCasePage': (context) => RecordCasePage(),
         '/uploaddocument': (context) => const UploadDocumentPage(),
         '/Previouscase': (context) => PreviousCasesPage(),
@@ -28,81 +29,91 @@ class Casereportingapp extends StatelessWidget {
     );
   }
 }
+class LoginPage extends StatelessWidget {
+  final TextEditingController idController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
-class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Welcome message
-            const Text(
-              'Welcome Back !',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.blue,
-              ),
+            SizedBox(height: 50), // Top spacing
+            Image.asset(
+              'Assets/Images/Loginpage.png', // Replace with your image path
+              width: 150, // Set width as needed
+              height: 200,
+              fit: BoxFit.contain,// Set height as needed
             ),
-            const SizedBox(height: 8),
-            // Subtitle
-            const Text(
-              'Sign in to continue',
-              style: TextStyle(fontSize: 16, color: Colors.black54),
+            SizedBox(height: 20),
+            Text(
+              "Welcome Back !",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.blue),
             ),
-            const SizedBox(height: 40),
-            // Full name input field
+            SizedBox(height: 20),
             TextField(
-              decoration: InputDecoration(
-                hintText: 'Enter Full Name',
-                filled: true,
-                fillColor: Colors.grey[200],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-            // ID number input field
-            TextField(
+              controller: idController,
               decoration: InputDecoration(
                 hintText: 'Enter ID Number',
-                filled: true,
-                fillColor: Colors.grey[200],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide: BorderSide.none,
-                ),
+                border: OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: 40),
-            // Sign up button
-            SizedBox(
-              width: double.infinity, // Full width button
-              child: ElevatedButton(
-                onPressed: () {
-                  // Navigate to the dashboard page using pushNamed
-                  Navigator.pushNamed(context, '/dashboard');
-                },
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  backgroundColor: Colors.blue,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ), // Button color
-                ),
-                child: const Text(
-                  'SIGN IN',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+            SizedBox(height: 5),
+            TextField(
+              controller: passwordController,
+              decoration: InputDecoration(
+                hintText: 'Enter Password',
+                border: OutlineInputBorder(),
               ),
+              obscureText: true,
+            ),
+            Row(
+              children: [
+                Checkbox(value: false, onChanged: (value) {}),
+                Text('Remember me'),
+                Spacer(),
+                TextButton(
+                  onPressed: () {
+                    // Forgot password logic
+                  },
+                  child: Text('Forgot Password?', style: TextStyle(color: Colors.blue)),
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Navigate to Home Page after successful login
+                Navigator.pushNamed(context, '/dashboard');
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                padding: EdgeInsets.symmetric(horizontal: 100, vertical: 15), // Button size
+              ),
+              child: Text('SIGN IN'),
+            ),
+            SizedBox(height: 10),
+            TextButton(
+              onPressed: () {
+                // Navigate to Sign Up Page
+                Navigator.pushNamed(context, '/signup');
+              },
+              child: Text("Do not have an account? Sign Up", style: TextStyle(color: Colors.blue)),
+            ),
+            SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () {
+                // Emergency report logic
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15), // Button size
+              ),
+              child: Text('EMERGENCY REPORT'),
             ),
           ],
         ),
@@ -110,6 +121,104 @@ class SignInPage extends StatelessWidget {
     );
   }
 }
+
+
+class SignUpPage extends StatelessWidget {
+  final TextEditingController fullNameController = TextEditingController();
+  final TextEditingController idController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(height: 100), // Top spacing
+            Text(
+              "Welcome",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.blue),
+            ),
+            SizedBox(height: 10),
+            Text(
+              "Register to continue",
+              style: TextStyle(fontSize: 16),
+            ),
+            SizedBox(height: 20),
+            TextField(
+              controller: fullNameController,
+              decoration: InputDecoration(
+                hintText: 'Enter Full Name',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 10),
+            TextField(
+              controller: idController,
+              decoration: InputDecoration(
+                hintText: 'Enter ID Number',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 10),
+            TextField(
+              controller: phoneController,
+              decoration: InputDecoration(
+                hintText: 'Enter Phone Number',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 10),
+            TextField(
+              controller: passwordController,
+              decoration: InputDecoration(
+                hintText: 'Enter Password',
+                border: OutlineInputBorder(),
+              ),
+              obscureText: true,
+            ),
+            SizedBox(height: 10),
+            TextField(
+              controller: confirmPasswordController,
+              decoration: InputDecoration(
+                hintText: 'Confirm Password',
+                border: OutlineInputBorder(),
+              ),
+              obscureText: true,
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Sign-up logic here
+                // After signing up, navigate to dashboard or login
+                Navigator.pushNamed(context, '/dashboard');
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                padding: EdgeInsets.symmetric(horizontal: 100, vertical: 15), // Button size
+              ),
+              child: Text('SIGN UP'),
+            ),
+            SizedBox(height: 10),
+            TextButton(
+              onPressed: () {
+                // Navigate back to Login page
+                Navigator.pop(context);
+              },
+              child: Text("Have an account? Sign In", style: TextStyle(color: Colors.blue)),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
 
 // Dashboard Page with Scrollable Case Cards
 class DashboardPage extends StatelessWidget {
@@ -657,8 +766,8 @@ class UploadDocumentPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Upload Document'),
       ),
-      body: Center(
-        child: const Text('Upload Document Page'),
+      body: const Center(
+        child: Text('Upload Document Page'),
       ),
     );
   }
@@ -670,9 +779,9 @@ class NotificationsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Notifications'),
+        title: const Text('Notifications'),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -690,44 +799,70 @@ class NotificationsPage extends StatelessWidget {
                     // Handle checkbox change
                   },
                 ),
-                Text('Mark all as Read'),
+                const Text('Mark all as Read'),
               ],
             ),
           ),
           Expanded(
             child: ListView(
               children: [
-                _buildNotificationTile(
-                  context,
-                  Icons.error,
-                  '2 Oct 2024',
-                  'Please attach evidence as requested earlier for the investigation to progress',
-                  Colors.red.shade100,
-                  Colors.red,
+                GestureDetector(
+                  onTap: () {
+                    // Handle tap, if needed
+                  },
+                  child: _buildNotificationTile(
+                    context,
+                    Icons.error,
+                    '2 Oct 2024',
+                    'Please attach evidence as requested earlier for the investigation to progress',
+                    Colors.red.shade100,
+                    Colors.red,
+                  ),
                 ),
-                _buildNotificationTile(
-                  context,
-                  Icons.message,
-                  '2 Oct 2024',
-                  'You have a new message from Inspector Swaleh',
-                  Colors.green.shade100,
-                  Colors.green,
+                GestureDetector(
+                  onTap: () {
+                    // Handle tap, if needed
+                  },
+                  child: _buildNotificationTile(
+                    context,
+                    Icons.message,
+                    '2 Oct 2024',
+                    'You have a new message from Inspector Swaleh',
+                    Colors.green.shade100,
+                    Colors.green,
+                  ),
                 ),
-                _buildNotificationTile(
-                  context,
-                  Icons.notification_important,
-                  '2 Oct 2024',
-                  'Please come to the station to confirm if the items retrieved are yours',
-                  Colors.yellow.shade100,
-                  Colors.yellow,
+                GestureDetector(
+                  onTap: () {
+                    // Navigate to ChatPage when tapped
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ChatPage(),
+                      ),
+                    );
+                  },
+                  child: _buildNotificationTile(
+                    context,
+                    Icons.notification_important,
+                    '2 Oct 2024',
+                    'Please come to the station to confirm if the items retrieved are yours',
+                    Colors.yellow.shade100,
+                    Colors.yellow,
+                  ),
                 ),
-                _buildNotificationTile(
-                  context,
-                  Icons.notification_important,
-                  '2 Oct 2024',
-                  'Your case has been assigned to Inspector Kennedy',
-                  Colors.yellow.shade100,
-                  Colors.yellow,
+                GestureDetector(
+                  onTap: () {
+                    // Handle tap, if needed
+                  },
+                  child: _buildNotificationTile(
+                    context,
+                    Icons.notification_important,
+                    '2 Oct 2024',
+                    'Your case has been assigned to Inspector Kennedy',
+                    Colors.yellow.shade100,
+                    Colors.yellow,
+                  ),
                 ),
               ],
             ),
@@ -761,8 +896,8 @@ class NotificationsPage extends StatelessWidget {
   Widget _buildNotificationTile(BuildContext context, IconData icon, String date,
       String message, Color backgroundColor, Color iconColor) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-      padding: EdgeInsets.all(16.0),
+      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(8.0),
@@ -771,22 +906,22 @@ class NotificationsPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(icon, color: iconColor, size: 40),
-          SizedBox(width: 16.0),
+          const SizedBox(width: 16.0),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   date,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.black54,
                   ),
                 ),
-                SizedBox(height: 8.0),
+                const SizedBox(height: 8.0),
                 Text(
                   message,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black87,
                     fontSize: 16.0,
                   ),
