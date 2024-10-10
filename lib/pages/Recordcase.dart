@@ -3,6 +3,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
 
 class RecordCaseApp extends StatelessWidget {
+  const RecordCaseApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,6 +17,8 @@ class RecordCaseApp extends StatelessWidget {
 }
 
 class RecordCasePage extends StatefulWidget {
+  const RecordCasePage({super.key});
+
   @override
   _RecordCasePageState createState() => _RecordCasePageState();
 }
@@ -155,11 +159,11 @@ class _RecordCasePageState extends State<RecordCasePage> {
               // Submit button
               ElevatedButton(
                 onPressed: submitForm,
-                child: Text('Submit'),
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.symmetric(vertical: 16.0),
                   textStyle: TextStyle(fontSize: 18),
                 ),
+                child: Text('Submit'),
               ),
             ],
           ),
@@ -215,7 +219,7 @@ class _RecordCasePageState extends State<RecordCasePage> {
 }
 
 class UploadDocumentPage extends StatelessWidget {
-  const UploadDocumentPage({Key? key}) : super(key: key);
+  const UploadDocumentPage({super.key});
 
   Future<void> _uploadDocument(BuildContext context) async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
@@ -332,18 +336,18 @@ class UploadDocumentPage extends StatelessWidget {
                 width: double.infinity, // Full width button
                 child: ElevatedButton(
                   onPressed: _submit,
-                  child: const Text(
-                    'Submit',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white, backgroundColor: Colors.blue, // Text color
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8), // Rounded corners
+                    ),
+                  ),
+                  child: const Text(
+                    'Submit',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
@@ -381,11 +385,11 @@ class ConfirmationPage extends StatelessWidget {
   final String obNumber;
 
   const ConfirmationPage({
-    Key? key,
+    super.key,
     required this.fullName,
     required this.policeStation,
     required this.obNumber,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

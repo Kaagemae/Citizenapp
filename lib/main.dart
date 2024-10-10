@@ -1,6 +1,3 @@
-import 'package:citizencasereportingapp/pages/Chatpage.dart';
-import 'package:citizencasereportingapp/pages/Nearbystations.dart';
-import 'package:citizencasereportingapp/pages/Previouspage.dart';
 import 'package:citizencasereportingapp/pages/Recordcase.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +6,8 @@ void main() {
 }
 
 class Casereportingapp extends StatelessWidget {
+  const Casereportingapp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,6 +29,8 @@ class Casereportingapp extends StatelessWidget {
 }
 
 class SignInPage extends StatelessWidget {
+  const SignInPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,6 +114,8 @@ class SignInPage extends StatelessWidget {
 
 // Dashboard Page with Scrollable Case Cards
 class DashboardPage extends StatelessWidget {
+  const DashboardPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -279,18 +282,18 @@ class DashboardPage extends StatelessWidget {
     );
   }
 
-  // Action Buttons Section (Add Case, Previous Cases)
+// Action Buttons Section (Add Case, Previous Cases)
   Widget _buildActionButtonsSection(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         _buildActionButton('Add Case', Icons.add_circle_outline, Colors.blueAccent, context),
-        _buildActionButton('Previous Cases', Icons.check_circle_outline, Colors.blueAccent, context),
+        _buildActionButton('Previous Cases', Icons.check_circle_outline, Colors.blueAccent, context), // No changes here
       ],
     );
   }
 
-  // Reusable Action Button Widget
+// Reusable Action Button Widget
   Widget _buildActionButton(String label, IconData icon, Color color, BuildContext context) {
     return GestureDetector(
       onTap: () {
@@ -328,7 +331,13 @@ class DashboardPage extends StatelessWidget {
               children: [
                 Icon(icon, size: 40, color: color),
                 const SizedBox(height: 8),
-                Text(label, style: TextStyle(fontSize: 16, color: color)),
+                Center( // Center the text
+                  child: Text(
+                    label,
+                    style: TextStyle(fontSize: 16, color: color),
+                    textAlign: TextAlign.center, // Ensure text is centered
+                  ),
+                ),
               ],
             ),
           ),
@@ -386,11 +395,11 @@ class CaseCard extends StatelessWidget {
   final String status;
 
   const CaseCard({
-    Key? key,
+    super.key,
     required this.caseTitle,
     required this.dateAdded,
     required this.status,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -470,6 +479,8 @@ class CaseCard extends StatelessWidget {
 
 // Placeholder for the RecordCasePage
 class RecordCaseApp extends StatelessWidget {
+  const RecordCaseApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -485,6 +496,8 @@ class RecordCaseApp extends StatelessWidget {
 
 
 class PreviousCasesPage extends StatelessWidget {
+  const PreviousCasesPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -649,7 +662,7 @@ class PreviousCasesPage extends StatelessWidget {
 
 // Placeholder for the UploadDocumentPage
 class UploadDocumentPage extends StatelessWidget {
-  const UploadDocumentPage({Key? key}) : super(key: key);
+  const UploadDocumentPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -666,6 +679,8 @@ class UploadDocumentPage extends StatelessWidget {
 
 // Placeholder for the NotificationsPage
 class NotificationsPage extends StatelessWidget {
+  const NotificationsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -3,7 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 
 class UploadDocumentPage extends StatelessWidget {
-  const UploadDocumentPage({Key? key}) : super(key: key);
+  const UploadDocumentPage({super.key});
 
   Future<void> _uploadDocument(BuildContext context) async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
@@ -144,20 +144,20 @@ class UploadDocumentPage extends StatelessWidget {
               child: SizedBox(
                 width: double.infinity, // Full width button
                 child: ElevatedButton(
-                  onPressed: () => _submit(context), // Pass context to submit
-                  child: const Text(
-                    'Submit',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  onPressed: () => _submit(context),
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,
                     backgroundColor: Colors.blue, // Text color
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8), // Rounded corners
+                    ),
+                  ), // Pass context to submit
+                  child: const Text(
+                    'Submit',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),

@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 
 class ChatPage extends StatefulWidget {
+  const ChatPage({super.key});
+
   @override
   _ChatPageState createState() => _ChatPageState();
 }
 
 class _ChatPageState extends State<ChatPage> {
   List<Map<String, dynamic>> messages = [];
-  TextEditingController _messageController = TextEditingController();
+  final TextEditingController _messageController = TextEditingController();
 
   // Function to send a text message
   void _sendMessage(String message) {
