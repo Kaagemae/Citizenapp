@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
 
-class RecordCaseApp extends StatelessWidget {
-  const RecordCaseApp({super.key});
 
+class RecordCaseApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,23 +16,29 @@ class RecordCaseApp extends StatelessWidget {
 }
 
 class RecordCasePage extends StatefulWidget {
-  const RecordCasePage({super.key});
-
   @override
   _RecordCasePageState createState() => _RecordCasePageState();
 }
 
 class _RecordCasePageState extends State<RecordCasePage> {
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController _dateController = TextEditingController(); // Added controller for date
   String? selectedStation;
   String? selectedCaseType;
   String? fullName;
-  String? idNumber;
-  DateTime? reportedDate;
-  String? stake;
+  String? phoneNumber;
+  String? emailAddress;
+  String? involvedParties;
   String? caseDescription;
   String? obNumber;
   PlatformFile? uploadedFile;
+
+  @override
+  void initState() {
+    super.initState();
+    // Set the initial value of the date to today's date
+    _dateController.text = DateTime.now().toLocal().toString().split(' ')[0]; // Format YYYY-MM-DD
+  }
 
   // Sample OB number generation
   String generateObNumber() {
@@ -107,22 +112,44 @@ class _RecordCasePageState extends State<RecordCasePage> {
                 onSaved: (value) => fullName = value,
               ),
               const SizedBox(height: 16),
-              // ID Number input
+              // Phone Number input
               buildTextFormField(
-                label: 'ID Number',
-                onSaved: (value) => idNumber = value,
+                label: 'Phone Number',
+                onSaved: (value) => phoneNumber = value,
               ),
               const SizedBox(height: 16),
-              // Date input
+              // Email input
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Email Address',
+                  border: OutlineInputBorder(),
+                ),
+                onSaved: (value) => emailAddress = value,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your email address';
+                  }
+                  final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+                  if (!emailRegex.hasMatch(value)) {
+                    return 'Please enter a valid email address';
+                  }
+                  return null;
+                },
+              ),
+
+              const SizedBox(height: 16),
+              // Date input with controller
               buildTextFormField(
-                label: 'Date Reported (DD/MM/YYYY)',
-                onSaved: (value) => reportedDate = DateTime.now(),
+                label: 'Date Reported',
+                controller: _dateController, // Use the controller
+                onSaved: (value) => value = _dateController.text, // Save the date
+                readOnly: true, // Prevent user from editing
               ),
               const SizedBox(height: 16),
-              // Stake input
+              // Involved parties input
               buildTextFormField(
-                label: 'Stake',
-                onSaved: (value) => stake = value,
+                label: 'Involved Parties',
+                onSaved: (value) => involvedParties = value,
               ),
               const SizedBox(height: 16),
               // Case description input
@@ -159,11 +186,14 @@ class _RecordCasePageState extends State<RecordCasePage> {
               // Submit button
               ElevatedButton(
                 onPressed: submitForm,
+                child: Text('Submit'),
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.symmetric(vertical: 16.0),
                   textStyle: TextStyle(fontSize: 18),
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white,
+
                 ),
-                child: Text('Submit'),
               ),
             ],
           ),
@@ -202,9 +232,12 @@ class _RecordCasePageState extends State<RecordCasePage> {
   Widget buildTextFormField({
     required String label,
     required void Function(String?) onSaved,
+    TextEditingController? controller, // Add controller parameter
     int maxLines = 1,
+    bool readOnly = false, // Add readOnly parameter
   }) {
     return TextFormField(
+      controller: controller, // Set the controller
       decoration: InputDecoration(
         labelText: label,
         border: OutlineInputBorder(
@@ -214,12 +247,13 @@ class _RecordCasePageState extends State<RecordCasePage> {
       onSaved: onSaved,
       validator: (value) => value!.isEmpty ? 'Please enter $label' : null,
       maxLines: maxLines,
+      readOnly: readOnly, // Set the readOnly property
     );
   }
 }
 
 class UploadDocumentPage extends StatelessWidget {
-  const UploadDocumentPage({super.key});
+  const UploadDocumentPage({Key? key}) : super(key: key);
 
   Future<void> _uploadDocument(BuildContext context) async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
@@ -336,18 +370,18 @@ class UploadDocumentPage extends StatelessWidget {
                 width: double.infinity, // Full width button
                 child: ElevatedButton(
                   onPressed: _submit,
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white, backgroundColor: Colors.blue, // Text color
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8), // Rounded corners
-                    ),
-                  ),
                   child: const Text(
                     'Submit',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white, backgroundColor: Colors.blue, // Text color
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8), // Rounded corners
                     ),
                   ),
                 ),
@@ -385,11 +419,11 @@ class ConfirmationPage extends StatelessWidget {
   final String obNumber;
 
   const ConfirmationPage({
-    super.key,
+    Key? key,
     required this.fullName,
     required this.policeStation,
     required this.obNumber,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

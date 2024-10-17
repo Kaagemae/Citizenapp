@@ -1,6 +1,4 @@
 import 'package:citizencasereportingapp/pages/Chatpage.dart';
-import 'package:citizencasereportingapp/pages/Nearbystations.dart';
-import 'package:citizencasereportingapp/pages/Previouspage.dart';
 import 'package:citizencasereportingapp/pages/Recordcase.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +7,8 @@ void main() {
 }
 
 class Casereportingapp extends StatelessWidget {
+  const Casereportingapp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -33,6 +33,8 @@ class LoginPage extends StatelessWidget {
   final TextEditingController idController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  LoginPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +49,7 @@ class LoginPage extends StatelessWidget {
               'Assets/Images/Loginpage.png', // Replace with your image path
               width: 150, // Set width as needed
               height: 200,
-              fit: BoxFit.contain,// Set height as needed
+              fit: BoxFit.contain, // Set height as needed
             ),
             SizedBox(height: 20),
             Text(
@@ -85,18 +87,21 @@ class LoginPage extends StatelessWidget {
               ],
             ),
             SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Navigate to Home Page after successful login
-                Navigator.pushNamed(context, '/dashboard');
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
-                padding: EdgeInsets.symmetric(horizontal: 100, vertical: 15), // Button size
+            // Wrap the button in a SizedBox for fixed width
+            SizedBox(
+              width: double.infinity, // Set width to fill parent
+              child: ElevatedButton(
+                onPressed: () {
+                  // Navigate to Home Page after successful login
+                  Navigator.pushNamed(context, '/dashboard');
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  padding: EdgeInsets.symmetric(vertical: 15), // Button size
+                ),
+                child: Text('SIGN IN'),
               ),
-              child: Text('SIGN IN'),
             ),
-            SizedBox(height: 10),
             TextButton(
               onPressed: () {
                 // Navigate to Sign Up Page
@@ -104,16 +109,19 @@ class LoginPage extends StatelessWidget {
               },
               child: Text("Do not have an account? Sign Up", style: TextStyle(color: Colors.blue)),
             ),
-            SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () {
-                // Emergency report logic
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
-                padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15), // Button size
+            SizedBox(height: 20), // Add some space after the Sign Up text
+            SizedBox(
+              width: double.infinity, // Set width to fill parent
+              child: ElevatedButton(
+                onPressed: () {
+                  // Emergency report logic
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  padding: EdgeInsets.symmetric(vertical: 15), // Same padding as SIGN IN
+                ),
+                child: Text('EMERGENCY REPORT'),
               ),
-              child: Text('EMERGENCY REPORT'),
             ),
           ],
         ),
@@ -129,6 +137,8 @@ class SignUpPage extends StatelessWidget {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController = TextEditingController();
+
+  SignUpPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -203,7 +213,7 @@ class SignUpPage extends StatelessWidget {
               ),
               child: Text('SIGN UP'),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 0),
             TextButton(
               onPressed: () {
                 // Navigate back to Login page
@@ -222,6 +232,8 @@ class SignUpPage extends StatelessWidget {
 
 // Dashboard Page with Scrollable Case Cards
 class DashboardPage extends StatelessWidget {
+  const DashboardPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -399,7 +411,8 @@ class DashboardPage extends StatelessWidget {
     );
   }
 
-  // Reusable Action Button Widget
+
+// Reusable Action Button Widget
   Widget _buildActionButton(String label, IconData icon, Color color, BuildContext context) {
     return GestureDetector(
       onTap: () {
@@ -432,19 +445,28 @@ class DashboardPage extends StatelessWidget {
                 ),
               ],
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(icon, size: 40, color: color),
-                const SizedBox(height: 8),
-                Text(label, style: TextStyle(fontSize: 16, color: color)),
-              ],
+            // Center the content inside the button
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(icon, size: 40, color: color),
+                  const SizedBox(height: 8),
+                  // Center the text horizontally
+                  Text(
+                    label,
+                    style: TextStyle(fontSize: 16, color: color),
+                    textAlign: TextAlign.center, // Ensure text alignment is center
+                  ),
+                ],
+              ),
             ),
           ),
         ],
       ),
     );
   }
+
 
   // Previous Cases Section
   Widget _buildCaseCardsSection() {
@@ -495,11 +517,11 @@ class CaseCard extends StatelessWidget {
   final String status;
 
   const CaseCard({
-    Key? key,
+    super.key,
     required this.caseTitle,
     required this.dateAdded,
     required this.status,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -579,6 +601,8 @@ class CaseCard extends StatelessWidget {
 
 // Placeholder for the RecordCasePage
 class RecordCaseApp extends StatelessWidget {
+  const RecordCaseApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -594,6 +618,8 @@ class RecordCaseApp extends StatelessWidget {
 
 
 class PreviousCasesPage extends StatelessWidget {
+  const PreviousCasesPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -758,7 +784,7 @@ class PreviousCasesPage extends StatelessWidget {
 
 // Placeholder for the UploadDocumentPage
 class UploadDocumentPage extends StatelessWidget {
-  const UploadDocumentPage({Key? key}) : super(key: key);
+  const UploadDocumentPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -775,6 +801,8 @@ class UploadDocumentPage extends StatelessWidget {
 
 // Placeholder for the NotificationsPage
 class NotificationsPage extends StatelessWidget {
+  const NotificationsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

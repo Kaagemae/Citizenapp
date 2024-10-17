@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'Chatpage.dart';
 import 'Previouspage.dart';
 import 'Recordcase.dart';
-import 'Notificationpage.dart';
 
 class DashboardPage extends StatelessWidget {
+  const DashboardPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +20,6 @@ class DashboardPage extends StatelessWidget {
                 icon: const Icon(Icons.notifications, color: Colors.black),
                 onPressed: () {
                   // Navigate to NotificationsPage
-
                   print("Hello this is working");
                   Navigator.push(
                     context,
@@ -69,12 +69,15 @@ class DashboardPage extends StatelessWidget {
             const SizedBox(height: 20),
             _buildActionButtonsSection(context), // Buttons for Add Case and Previous Cases
             const SizedBox(height: 20),
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Previous Cases',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Previous Cases',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+              ],
             ),
             const SizedBox(height: 14),
             _buildCaseCardsSection(), // Previous cases list
@@ -262,11 +265,11 @@ class CaseCard extends StatelessWidget {
   final String status;
 
   const CaseCard({
-    Key? key,
+    super.key,
     required this.caseTitle,
     required this.dateAdded,
     required this.status,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -317,6 +320,8 @@ class CaseCard extends StatelessWidget {
 
 // Notifications Page
 class NotificationsPage extends StatelessWidget {
+  const NotificationsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -338,139 +343,16 @@ class NotificationsPage extends StatelessWidget {
                 Checkbox(
                   value: false, // manage state if needed
                   onChanged: (value) {
-                    // Handle checkbox change
+                    // manage checkbox state
                   },
                 ),
-                const Text('Mark all as Read'),
-              ],
-            ),
-          ),
-          Expanded(
-            child: ListView(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    // Handle tap, if needed
-                  },
-                  child: _buildNotificationTile(
-                    context,
-                    Icons.error,
-                    '2 Oct 2024',
-                    'Please attach evidence as requested earlier for the investigation to progress',
-                    Colors.red.shade100,
-                    Colors.red,
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    // Handle tap, if needed
-                  },
-                  child: _buildNotificationTile(
-                    context,
-                    Icons.message,
-                    '2 Oct 2024',
-                    'You have a new message from Inspector Swaleh',
-                    Colors.green.shade100,
-                    Colors.green,
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    // Navigate to ChatPage when tapped
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ChatPage(),
-                      ),
-                    );
-                  },
-                  child: _buildNotificationTile(
-                    context,
-                    Icons.notification_important,
-                    '2 Oct 2024',
-                    'Please come to the station to confirm if the items retrieved are yours',
-                    Colors.yellow.shade100,
-                    Colors.yellow,
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    // Handle tap, if needed
-                  },
-                  child: _buildNotificationTile(
-                    context,
-                    Icons.notification_important,
-                    '2 Oct 2024',
-                    'Your case has been assigned to Inspector Kennedy',
-                    Colors.yellow.shade100,
-                    Colors.yellow,
-                  ),
+                const Expanded(
+                  child: Text('Notification 1: New update available.'),
                 ),
               ],
             ),
           ),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.folder),
-            label: 'Cases',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.task),
-            label: 'Tasks',
-          ),
-        ],
-        currentIndex: 0, // manage the index dynamically
-        selectedItemColor: Colors.blue,
-        onTap: (index) {
-          // Handle bottom nav taps
-        },
-      ),
-    );
-  }
-
-  Widget _buildNotificationTile(BuildContext context, IconData icon, String date,
-      String message, Color backgroundColor, Color iconColor) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-      padding: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon, color: iconColor, size: 40),
-          const SizedBox(width: 16.0),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  date,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black54,
-                  ),
-                ),
-                const SizedBox(height: 8.0),
-                Text(
-                  message,
-                  style: const TextStyle(
-                    color: Colors.black87,
-                    fontSize: 16.0,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          // Add more notifications here
         ],
       ),
     );

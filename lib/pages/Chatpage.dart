@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:file_picker/file_picker.dart';
+// import 'package:file_picker/file_picker.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
@@ -28,19 +28,19 @@ class _ChatPageState extends State<ChatPage> {
 
   // Function to handle file upload
   void _uploadFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-    if (result != null) {
-      String? filePath = result.files.single.path;
-      if (filePath != null) {
-        setState(() {
-          messages.add({
-            'text': filePath.split('/').last, // Display the file name
-            'isReceived': false,
-            'isFile': true,
-          });
-        });
-      }
-    }
+    // FilePickerResult? result = await FilePicker.platform.pickFiles();
+    // if (result != null) {
+    //   String? filePath = result.files.single.path;
+    //   if (filePath != null) {
+    //     setState(() {
+    //       messages.add({
+    //         'text': filePath.split('/').last, // Display the file name
+    //         'isReceived': false,
+    //         'isFile': true,
+    //       });
+    //     });
+    //   }
+    // }
   }
 
   @override
