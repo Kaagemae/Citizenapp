@@ -1,4 +1,5 @@
 import 'package:citizencasereportingapp/pages/Chatpage.dart';
+import 'package:citizencasereportingapp/pages/Nearbystations.dart';
 import 'package:citizencasereportingapp/pages/Recordcase.dart';
 import 'package:flutter/material.dart';
 
@@ -24,6 +25,7 @@ class Casereportingapp extends StatelessWidget {
         '/RecordCasePage': (context) => RecordCasePage(),
         '/uploaddocument': (context) => const UploadDocumentPage(),
         '/Previouscase': (context) => PreviousCasesPage(),
+        '/nearbyStations': (context) => NearbyStationPage(),
       },
       initialRoute: '/', // Set the initial route
     );
@@ -115,6 +117,7 @@ class LoginPage extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {
                   // Emergency report logic
+                  Navigator.pushNamed(context, '/nearbyStations');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
@@ -408,7 +411,7 @@ class DashboardPage extends StatelessWidget {
         _buildActionButton('Add Case', Icons.add_circle_outline, Colors.blueAccent, context),
         _buildActionButton('Previous Cases', Icons.check_circle_outline, Colors.blueAccent, context),
       ],
-    );
+          );
   }
 
 
